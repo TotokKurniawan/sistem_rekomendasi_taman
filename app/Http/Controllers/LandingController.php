@@ -21,7 +21,8 @@ class LandingController extends Controller
 
     public function rekomendasi()
     {
-        return view('landing.rekomendasi');
+        $jumlahUser = 0; // Berikan nilai default atau ambil dari database jika ada
+        return view('landing.rekomendasi', compact('jumlahUser'));
     }
     public function Service()
     {

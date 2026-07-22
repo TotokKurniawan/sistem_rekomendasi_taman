@@ -7,10 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class RekomendasiController extends Controller
 {
-    public function showForm()
-    {
-        return view('landing.rekomendasi');
-    }
 
     public function prosesRekomendasi(Request $request)
     {
@@ -46,7 +42,7 @@ class RekomendasiController extends Controller
         }
 
         try {
-            $response = Http::post('http://127.0.0.1:5000/predict', $input);
+            $response = Http::post('https://totok.pythonanywhere.com/predict', $input);
         } catch (\Exception $e) {
             $msg = 'Gagal menghubungi server rekomendasi: ' . $e->getMessage();
             if ($request->ajax()) {
