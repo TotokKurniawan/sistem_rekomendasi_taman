@@ -22,8 +22,12 @@ WORKDIR /var/www/html
 # Copy seluruh file project
 COPY . /var/www/html
 
-# Fix MPM conflict (Mengatasi error "More than one MPM loaded")
-RUN a2dismod mpm_event && a2enmod mpm_prefork
+# FIX TOTAL: Hapus paksa modul MPM ganda yang sering konflik di container Debian Apache
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
+    /etc/apache2/mods-enabled/mpm_event.conf \
+    /etc/apache2/mods-enabled/mpm_worker.load \
+    /etc/apache2/mods-enabled/mpm_worker.conf \
+    && a2enmod mpm_prefork
 
 # Set permission folder storage dan bootstrap cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
