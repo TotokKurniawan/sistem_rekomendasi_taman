@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install ekstensi PHP yang dibutuhkan Laravel
+# Install ekstensi PHP dan dependensi sistem
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -21,6 +21,9 @@ WORKDIR /var/www/html
 
 # Copy seluruh file project
 COPY . /var/www/html
+
+# Fix MPM conflict (Mengatasi error "More than one MPM loaded")
+RUN a2dismod mpm_event && a2enmod mpm_prefork
 
 # Set permission folder storage dan bootstrap cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
