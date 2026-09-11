@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class RekomendasiController extends Controller
 {
-
     public function prosesRekomendasi(Request $request)
     {
         // Map input form ke fitur model
@@ -27,40 +26,70 @@ class RekomendasiController extends Controller
             'ukuran_taman' => 'Ukuran Taman yang Cocok (Kategori)',
             'indoor_use' => 'Lokasi Penanaman (Indoor/Outdoor)'
         ];
+
         $missing = [];
+
         foreach ($required as $field => $label) {
             if (empty($request->input($field))) {
                 $missing[] = $label;
             }
         }
+
         if (count($missing) > 0) {
             $msg = 'Field berikut wajib diisi: ' . implode(', ', $missing);
+
             if ($request->ajax()) {
-                return response()->json(['error' => $msg], 422);
+                return response()->json([
+                    'error' => $msg
+                ], 422);
             }
-            return redirect()->back()->withInput()->with('error', $msg);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $msg);
         }
 
         try {
-            $response = Http::post('https://totok.pythonanywhere.com/predict', $input);
+            // Kirim data ke Flask lokal
+            $response = Http::post(
+                'http://127.0.0.1:5000/predict',
+                $input
+            );
         } catch (\Exception $e) {
             $msg = 'Gagal menghubungi server rekomendasi: ' . $e->getMessage();
+
             if ($request->ajax()) {
-                return response()->json(['error' => $msg], 500);
+                return response()->json([
+                    'error' => $msg
+                ], 500);
             }
-            return redirect()->back()->withInput()->with('error', $msg);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $msg);
         }
 
         if ($response->failed()) {
             $msg = 'Terjadi kesalahan pada server rekomendasi.';
+
             if ($response->json('error')) {
                 $msg = $response->json('error');
             }
+
             if ($request->ajax()) {
-                return response()->json(['error' => $msg], $response->status());
+                return response()->json([
+                    'error' => $msg
+                ], $response->status());
             }
-            return redirect()->back()->withInput()->with('error', $msg);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $msg);
         }
+
         $top_types = $response->json('top_types') ?? [];
         $rekomendasi = $response->json('rekomendasi') ?? [];
 
@@ -70,6 +99,10 @@ class RekomendasiController extends Controller
                 'rekomendasi' => $rekomendasi
             ]);
         }
-        return view('landing.rekomendasi', compact('rekomendasi'));
+
+        return view(
+            'landing.rekomendasi',
+            compact('rekomendasi')
+        );
     }
 }

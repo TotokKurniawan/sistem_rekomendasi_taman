@@ -86,9 +86,10 @@
                                         <label class="form-label fw-bold">Pilih Intensitas Cahaya (Kategori):</label>
                                         <select class="form-select form-select-lg" id="input0" name="sunlight" required>
                                             <option value="">Pilih...</option>
-                                            <option value="Penuh">1. Penuh</option>
-                                            <option value="Rendah">2. Rendah</option>
-                                            <option value="Sebagian">3. Sebagian</option>
+                                            <option value="Penuh">1. Penuh ( 6–8 jam terkena matahari langsung )</option>
+                                            <option value="Rendah">2. Rendah ( 3–6 jam terkena matahari langsung )</option>
+                                            <option value="Sebagian">3. Sebagian ( Kurang dari 3 jam terkena matahari
+                                                langsung )</option>
                                         </select>
                                     </div>
                                     <div class="mb-4 form-group-custom">
@@ -96,9 +97,9 @@
                                         <select class="form-select form-select-lg" id="input1" name="intensitas_air"
                                             required disabled>
                                             <option value="">Pilih...</option>
-                                            <option value="Sedang">1. Sedang</option>
-                                            <option value="Rendah">2. Rendah</option>
-                                            <option value="Tinggi">3. Tinggi</option>
+                                            <option value="Sedang">1. Sedang ( 3–5 kali seminggu )</option>
+                                            <option value="Rendah">2. Rendah ( 1–2 kali seminggu )</option>
+                                            <option value="Tinggi">3. Tinggi ( 6–7 kali seminggu )</option>
                                         </select>
                                     </div>
                                     <div class="mb-4 form-group-custom">
@@ -136,9 +137,9 @@
                                         <select class="form-select form-select-lg" id="input4" name="ukuran_taman"
                                             required disabled>
                                             <option value="">Pilih...</option>
-                                            <option value="Besar">1. Besar</option>
-                                            <option value="Sedang">2. Sedang</option>
-                                            <option value="Kecil">3. Kecil</option>
+                                            <option value="Besar">1. Besar ( > 10 m² )</option>
+                                            <option value="Sedang">2. Sedang ( 5–10 m² )</option>
+                                            <option value="Kecil">3. Kecil ( < 5 m² )</option>
                                         </select>
                                     </div>
                                     <div class="mb-4 form-group-custom">
